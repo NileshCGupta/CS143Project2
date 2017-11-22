@@ -173,7 +173,7 @@ private[sql] class DiskPartition (
     */
   def closeInput() = {
     /* IMPLEMENT THIS METHOD */
-    if (measurePartitionSize() > 0) {
+    if (data.size() > 0) {
       spillPartitionToDisk()
       data.clear()
     }
@@ -215,6 +215,32 @@ private[sql] object DiskHashedRelation {
               size: Int = 64,
               blockSize: Int = 64000) = {
     /* IMPLEMENT THIS METHOD */
-    null
+    new DiskHashedRelation {
+      val partitions: Array[DiskPartition] = new Array[DiskPartition](size)
+      val getSize: Iterator[Row] = input
+
+
+      for (x <- 0 until size) {
+        partitions(x) = new DiskPartition("disk partition", blockSize)
+      }
+
+      while(input.hasNext) {
+        val tempRow: Row = input.next()
+        partitions(tempRow.hashCode() % size).insert(tempRow)
+      }
+
+      override def getIterator(): Iterator[DiskPartition] = {
+        for (x <- 0 until size) {
+          partitions(x).closeInput()
+        }
+        partitions.iterator
+      }
+
+      override def closeAllPartitions() = {
+        for (x <- 0 until size) {
+          partitions(x).closePartition()
+        }
+      }
+    }
   }
 }
