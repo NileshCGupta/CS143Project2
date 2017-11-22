@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Fall 2017 CS 143 Project 2
 
 This project is split into two parts. In Part A, you'll implement the caching mechanism of User-Defined Functions. In Part B, you'll implement the hash-based aggregation mechanism. Part A has 4 tasks and Part B has 3 tasks (the last 2 are extra credits).
@@ -183,3 +184,6 @@ Please **only submit** the script-created `project2.zip` file to CCLE.
 Big thanks to Matteo Interlandi.
 
 **Good luck!**
+=======
+# CS143Project2
+>>>>>>> 62894dc8efd9c4791128e14f3ab3ae2a0cceb019
